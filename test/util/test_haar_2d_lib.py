@@ -25,7 +25,6 @@ def run_tests():
     Runs tests to verify the refactored Haar wavelet library.
     """
     print("--- Starting Refactored Haar Wavelet Library Test ---")
-    image_path = R""
     
     # 1. Load test image from a file
     resolution = 128
@@ -103,5 +102,36 @@ def run_tests():
     plt.tight_layout()
     plt.show()
 
+def run_down_grade_test():
+    resolution = 128
+    image = setup_test_image(size=(resolution, resolution))
+    print(f"\n1. Loaded and resized test image to {resolution}x{resolution}.")
+
+    # 2. Test creation from image and perfect reconstruction
+    print("\n2. Testing HaarCoefficient.from_image() and to_image()...")
+    haar_obj = hwl.HaarCoefficient.from_image(image)
+    reconstructed_image = haar_obj.to_image()
+
+    plt.figure(figsize=(12, 8))
+    plt.subplot(3, 3, 1)
+    plt.imshow(image, cmap='gray')
+    plt.title("Original Image")
+
+    plt.subplot(3, 3, 2)
+    plt.imshow(reconstructed_image, cmap='gray')
+    plt.title("Reconstructed Image")
+
+    # 3. Test the 'downgrade' method and partial reconstruction
+    total_level = haar_obj.level
+    for level_to_keep in range(0, total_level):
+        downgraded_haar_obj = haar_obj.downgrade(level_to_keep)
+        blurry_image = downgraded_haar_obj.to_image()
+        plt.subplot(3, 3, level_to_keep + 3)
+        plt.imshow(blurry_image, cmap='gray')
+        plt.title(f"Level {level_to_keep} Blurry Image")
+
+    plt.tight_layout()
+    plt.show()
+
 if __name__ == '__main__':
-    run_tests()
+    run_down_grade_test()
