@@ -1,4 +1,3 @@
-# test_patterns.py
 import numpy as np
 import matplotlib.pyplot as plt
 import util.measurement_helper as mh

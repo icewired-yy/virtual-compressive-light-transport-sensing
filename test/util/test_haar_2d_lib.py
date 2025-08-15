@@ -1,10 +1,10 @@
-# test_haar.py
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import urllib.request
 import os
 import util.haar_2d_lib as hwl
+
 
 def setup_test_image(path="test_image.png", size=(128, 128)):
     """
